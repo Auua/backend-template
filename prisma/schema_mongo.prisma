@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@custom_prisma/mongo"
+}
+
+generator nestgraphql {
+  provider                     = "node node_modules/prisma-nestjs-graphql"
+  output                       = "../src/@generated"
+  // Add validations
+  fields_Validator_from        = "class-validator"
+  fields_Validator_input       = true
+  fields_CustomValidator_from  = "@/common/validations"
+  fields_CustomValidator_input = true
+  // Add configs for validation decorates
+  decorate_1_type              = "@(Create|Update)*Args"
+  decorate_1_field             = data
+  decorate_1_name              = ValidateNested
+  decorate_1_from              = "class-validator"
+  decorate_1_arguments         = "[]"
+}
+
+datasource mongo {
+  provider = "mongodb"
+  url      = env("MONGO_DATABASE_URL")
+}
+
+model Item {
+  /// @HideField({ match: ['*Update*Input', '*Create*Input'] })
+  id          String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  /// @Validator.MinLength(2)
+  /// @CustomValidator.IsValidString()
+  name        String
+  /// @CustomValidator.IsValidString()
+  description String?
+  count       Int?
+  /// @HideField({input: true })
+  createdAt   DateTime @default(now())
+  /// @HideField({input: true })
+  updatedAt   DateTime @updatedAt
+}
