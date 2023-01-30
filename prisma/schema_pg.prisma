@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@custom_prisma/pg"
+}
+
+generator nestgraphql {
+  provider                     = "node node_modules/prisma-nestjs-graphql"
+  output                       = "../src/@generated"
+  // Add validations
+  fields_Validator_from        = "class-validator"
+  fields_Validator_input       = true
+  fields_CustomValidator_from  = "@/common/validations"
+  fields_CustomValidator_input = true
+  // Add configs for validation decorates
+  decorate_1_type              = "@(Create|Update)*Args"
+  decorate_1_field             = data
+  decorate_1_name              = ValidateNested
+  decorate_1_from              = "class-validator"
+  decorate_1_arguments         = "[]"
+}
+
+datasource pg {
+  provider = "postgresql"
+  url      = env("PG_DATABASE_URL")
+}
+
+model User {
+  /// @HideField({ match: ['*Update*Input', '*Create*Input'] })
+  id    Int    @default(autoincrement()) @id
+  /// @Validator.IsEmail()
+  email String @unique
+  /// @CustomValidator.IsValidString()
+  name  String
+}

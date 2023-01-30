@@ -1,0 +1,251 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  isSet: Boolean
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
+type Item {
+  count: Int
+  createdAt: DateTime!
+  description: String
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
+}
+
+input ItemCreateInput {
+  count: Int
+  description: String
+  name: String!
+}
+
+input ItemOrderByWithRelationInput {
+  count: SortOrder
+  description: SortOrder
+  id: SortOrder
+  name: SortOrder
+}
+
+enum ItemScalarFieldEnum {
+  count
+  createdAt
+  description
+  id
+  name
+  updatedAt
+}
+
+input ItemUpdateInput {
+  count: NullableIntFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input ItemWhereInput {
+  AND: [ItemWhereInput!]
+  NOT: [ItemWhereInput!]
+  OR: [ItemWhereInput!]
+  count: IntNullableFilter
+  description: StringNullableFilter
+  id: StringFilter
+  name: StringFilter
+}
+
+input ItemWhereUniqueInput {
+  id: String
+}
+
+type Mutation {
+  createItem(data: ItemCreateInput!): Item!
+  createUser(data: UserCreateInput!): User!
+  removeItem(where: ItemWhereUniqueInput!): Item!
+  removeUser(where: UserWhereUniqueInput!): User!
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+input NestedIntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntFilter
+  notIn: [Int!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  isSet: Boolean
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NullableIntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
+  unset: Boolean
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+  unset: Boolean
+}
+
+type Query {
+  item(where: ItemWhereUniqueInput!): Item!
+  items(cursor: ItemWhereUniqueInput, distinct: [ItemScalarFieldEnum!], orderBy: [ItemOrderByWithRelationInput!], skip: Int, take: Int, where: ItemWhereInput): [Item!]!
+  user(where: UserWhereUniqueInput!): User!
+  users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  isSet: Boolean
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type User {
+  email: String!
+  id: ID!
+  name: String!
+}
+
+input UserCreateInput {
+  email: String!
+  name: String!
+}
+
+input UserOrderByWithRelationInput {
+  email: SortOrder
+  id: SortOrder
+  name: SortOrder
+}
+
+enum UserScalarFieldEnum {
+  email
+  id
+  name
+}
+
+input UserUpdateInput {
+  email: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  email: StringFilter
+  id: IntFilter
+  name: StringFilter
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: Int
+}
