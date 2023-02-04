@@ -5,7 +5,7 @@ import * as CustomValidator from '@/common/validations';
 @InputType()
 export class UserCreateManyInput {
   @HideField()
-  id?: number;
+  id?: string;
 
   @Field(() => String, { nullable: false })
   @Validator.IsEmail()

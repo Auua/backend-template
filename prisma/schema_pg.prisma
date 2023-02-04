@@ -29,7 +29,7 @@ datasource pg {
 
 model User {
   /// @HideField({ match: ['*Update*Input', '*Create*Input'] })
-  id    Int    @default(autoincrement()) @id
+  id    String @default(uuid()) @id
   /// @Validator.IsEmail()
   email String @unique
   /// @CustomValidator.IsValidString()

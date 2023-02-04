@@ -32,6 +32,10 @@ MONGO_DATABASE_URL=<your_mongodb.com_url>
 ### Generate prisma schemas
 
 ````shell
+npx prisma migrate dev --schema=./prisma/schema_pg.prisma  --name init
+````
+
+````shell
  prisma generate --schema=./prisma/schema_mongo.prisma
  prisma generate --schema=./prisma/schema_pg.prisma
 ````

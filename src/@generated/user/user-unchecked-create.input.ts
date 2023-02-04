@@ -5,7 +5,7 @@ import * as CustomValidator from '@/common/validations';
 @InputType()
 export class UserUncheckedCreateInput {
   @HideField()
-  id?: number;
+  id?: string;
 
   @Field(() => String, { nullable: false })
   @Validator.IsEmail()
