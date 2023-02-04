@@ -2,21 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AggregateItem {
+  _avg: ItemAvgAggregate
+  _count: ItemCountAggregate
+  _max: ItemMaxAggregate
+  _min: ItemMinAggregate
+  _sum: ItemSumAggregate
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-input IntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntFilter
-  notIn: [Int!]
-}
 
 input IntNullableFilter {
   equals: Int
@@ -39,10 +36,68 @@ type Item {
   updatedAt: DateTime!
 }
 
+type ItemAvgAggregate {
+  count: Float
+}
+
+input ItemAvgAggregateInput {
+  count: Boolean
+}
+
+type ItemCountAggregate {
+  _all: Int!
+  count: Int!
+  createdAt: Int!
+  description: Int!
+  id: Int!
+  name: Int!
+  updatedAt: Int!
+}
+
+input ItemCountAggregateInput {
+  _all: Boolean
+  count: Boolean
+  description: Boolean
+  id: Boolean
+  name: Boolean
+}
+
 input ItemCreateInput {
   count: Int
   description: String
   name: String!
+}
+
+type ItemMaxAggregate {
+  count: Int
+  createdAt: DateTime
+  description: String
+  id: String
+  name: String
+  updatedAt: DateTime
+}
+
+input ItemMaxAggregateInput {
+  count: Boolean
+  description: Boolean
+  id: Boolean
+  name: Boolean
+}
+
+type ItemMinAggregate {
+  count: Int
+  createdAt: DateTime
+  description: String
+  id: String
+  name: String
+  updatedAt: DateTime
+}
+
+input ItemMinAggregateInput {
+  count: Boolean
+  description: Boolean
+  id: Boolean
+  name: Boolean
 }
 
 input ItemOrderByWithRelationInput {
@@ -59,6 +114,14 @@ enum ItemScalarFieldEnum {
   id
   name
   updatedAt
+}
+
+type ItemSumAggregate {
+  count: Int
+}
+
+input ItemSumAggregateInput {
+  count: Boolean
 }
 
 input ItemUpdateInput {
@@ -88,17 +151,6 @@ type Mutation {
   removeUser(where: UserWhereUniqueInput!): User!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
-}
-
-input NestedIntFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntFilter
-  notIn: [Int!]
 }
 
 input NestedIntNullableFilter {
@@ -157,9 +209,11 @@ input NullableStringFieldUpdateOperationsInput {
 }
 
 type Query {
+  count(_avg: ItemAvgAggregateInput, _count: ItemCountAggregateInput, _max: ItemMaxAggregateInput, _min: ItemMinAggregateInput, _sum: ItemSumAggregateInput, cursor: ItemWhereUniqueInput, orderBy: [ItemOrderByWithRelationInput!], skip: Int, take: Int, where: ItemWhereInput): AggregateItem!
   item(where: ItemWhereUniqueInput!): Item!
   items(cursor: ItemWhereUniqueInput, distinct: [ItemScalarFieldEnum!], orderBy: [ItemOrderByWithRelationInput!], skip: Int, take: Int, where: ItemWhereInput): [Item!]!
-  user(where: UserWhereUniqueInput!): User!
+  uniqueUser(where: UserWhereUniqueInput!): User!
+  user(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): User!
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
 }
 
@@ -241,11 +295,11 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
   email: StringFilter
-  id: IntFilter
+  id: StringFilter
   name: StringFilter
 }
 
 input UserWhereUniqueInput {
   email: String
-  id: Int
+  id: String
 }

@@ -6,6 +6,7 @@ import { User } from '@/@generated/user/user.model';
 import { CreateOneUserArgs } from '@/@generated/user/create-one-user.args';
 import { UpdateOneUserArgs } from '@/@generated/user/update-one-user.args';
 import { FindManyUserArgs } from '@/@generated/user/find-many-user.args';
+import { FindFirstUserArgs } from '@/@generated/user/find-first-user.args';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -22,8 +23,13 @@ export class UsersResolver {
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args() findUniqueUserArgs: FindUniqueUserArgs) {
-    return this.usersService.user(findUniqueUserArgs);
+  findOne(@Args() findFirstUserArgs: FindFirstUserArgs) {
+    return this.usersService.user(findFirstUserArgs);
+  }
+
+  @Query(() => User, { name: 'uniqueUser' })
+  findUniqueOne(@Args() findUniqueUserArgs: FindUniqueUserArgs) {
+    return this.usersService.uniqueUser(findUniqueUserArgs);
   }
 
   @Mutation(() => User)
