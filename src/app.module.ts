@@ -10,9 +10,18 @@ import * as process from 'process';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { morganLogger } from '@/common/middleware/morgan.logger';
 import { ApolloDriver } from '@nestjs/apollo';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import config from './config/configuration';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '@/auth/guards';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
     ItemsModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
@@ -20,12 +29,21 @@ import { ApolloDriver } from '@nestjs/apollo';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), './src/schema.gql'),
       sortSchema: true,
-      context: ({ req }) => ({ headers: req.headers }),
+      context: ({ req, res }) => ({ headers: req.headers, req, res }),
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaMongoService, PrismaPgService],
+  providers: [
+    AppService,
+    PrismaMongoService,
+    PrismaPgService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -4,7 +4,4 @@ import { Field, InputType } from '@nestjs/graphql';
 export class NullableStringFieldUpdateOperationsInput {
   @Field(() => String, { nullable: true })
   set?: string;
-
-  @Field(() => Boolean, { nullable: true })
-  unset?: boolean;
 }

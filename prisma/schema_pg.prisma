@@ -29,9 +29,19 @@ datasource pg {
 
 model User {
   /// @HideField({ match: ['*Update*Input', '*Create*Input'] })
-  id    String @default(uuid()) @id
+  id           String   @default(uuid()) @id
   /// @Validator.IsEmail()
-  email String @unique
+  email        String   @unique
   /// @CustomValidator.IsValidString()
-  name  String
+  name         String
+  /// @HideField({ output: true })
+  password     String
+  /// hashed refresh token
+  refreshToken String?
+  /// @HideField({input: true })
+  createdAt    DateTime @default(now())
+  /// @HideField({input: true })
+  updatedAt    DateTime @updatedAt
+
+  @@unique([email, password], name: "loginCredentials")
 }

@@ -21,7 +21,7 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
 
   catch(exception: PrismaClientKnownRequestError, host: ArgumentsHost) {
     this.logger.error({
-      message: exception.message,
+      message: `${exception.code} ${exception.message}`,
       context: PrismaClientExceptionFilter.name,
     });
 
@@ -36,7 +36,8 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       }
       default:
         // default 500 error code
-        super.catch(exception, host);
+        //super.catch(exception, host);
+
         throw new InternalServerErrorException();
     }
   }

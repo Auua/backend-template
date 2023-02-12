@@ -1,4 +1,10 @@
-import { ArgumentsHost, Catch, HttpStatus, Logger } from '@nestjs/common';
+import {
+  ArgumentsHost,
+  Catch,
+  HttpException,
+  HttpStatus,
+  Logger,
+} from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { GqlArgumentsHost, GqlExceptionFilter } from '@nestjs/graphql';
 import { Request, Response } from 'express';
@@ -21,7 +27,9 @@ export class ExceptionsFilter
 
     this.logger.error(exception, exception.stack, ExceptionsFilter.name);
 
-    const status = exception.getStatus()
+    const isHttpError = Boolean(exception instanceof HttpException);
+
+    const status = isHttpError
       ? exception.getStatus()
       : HttpStatus.INTERNAL_SERVER_ERROR;
 
@@ -35,7 +43,7 @@ export class ExceptionsFilter
           : 'Internal server error',
     };
 
-    const errorResponse = exception.getResponse()
+    const errorResponse = isHttpError
       ? exception.getResponse()
       : customErrorResponse;
 
@@ -72,45 +80,4 @@ export class ExceptionsFilter
       return exception;
     }
   }
-
-  /*
-  public override catch(exception: unknown, host: ArgumentsHost): void {
-    let args: unknown;
-    if (host.getType<GqlContextType>() === 'graphql') {
-      console.log('grapfh');
-      const gqlHost = GqlArgumentsHost.create(host);
-      const {
-        req: {
-          body: { operationName, variables },
-        },
-      } = gqlHost.getContext();
-      args = `${operationName} ${JSON.stringify(variables)}`;
-    } else {
-      super.catch(exception, host);
-      console.log('aodjosajjfklaklsflalfnakelfnal');
-      // const req = host.switchToHttp().getRequest<Request>();
-      // req.method, req.originalUrl...
-      // args = req.body;
-    }
-
-    const status = this.getHttpStatus(exception);
-
-    console.log('excpetionssss' + exception);
-    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-      if (exception instanceof Error) {
-        this.logger.error(`${exception.message}: ${args}`, exception.stack);
-      } else {
-        // Error Notifications
-        this.logger.error('UnhandledException', exception);
-      }
-    }
-  }
-
-  private getHttpStatus(exception: unknown): number {
-    return exception instanceof HttpException
-      ? exception.getStatus()
-      : HttpStatus.INTERNAL_SERVER_ERROR;
-  }
-
-   */
 }

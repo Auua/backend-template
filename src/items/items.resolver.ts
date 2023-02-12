@@ -8,6 +8,7 @@ import { DeleteOneItemArgs } from '@/@generated/item/delete-one-item.args';
 import { FindUniqueItemArgs } from '@/@generated/item/find-unique-item.args';
 import { ItemAggregateArgs } from '@/@generated/item/item-aggregate.args';
 import { AggregateItem } from '@/@generated/item/aggregate-item.output';
+import { UpdateManyItemArgs } from '@/@generated/item/update-many-item.args';
 
 @Resolver(() => Item)
 export class ItemsResolver {
@@ -31,6 +32,11 @@ export class ItemsResolver {
   @Mutation(() => Item)
   updateItem(@Args() updateOneItemArgs: UpdateOneItemArgs) {
     return this.itemsService.updateItem(updateOneItemArgs);
+  }
+
+  @Mutation(() => Boolean, { name: 'updateManyItems' })
+  updateManyItem(@Args() updateManyItemArgs: UpdateManyItemArgs) {
+    return this.itemsService.updateManyItem(updateManyItemArgs);
   }
 
   @Mutation(() => Item)

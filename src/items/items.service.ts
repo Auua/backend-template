@@ -7,6 +7,7 @@ import { CreateOneItemArgs } from '@/@generated/item/create-one-item.args';
 import { DeleteOneItemArgs } from '@/@generated/item/delete-one-item.args';
 import { FindUniqueItemArgs } from '@/@generated/item/find-unique-item.args';
 import { ItemAggregateArgs } from '@/@generated/item/item-aggregate.args';
+import { UpdateManyItemArgs } from '@/@generated/item/update-many-item.args';
 
 @Injectable()
 export class ItemsService {
@@ -30,6 +31,14 @@ export class ItemsService {
 
   async updateItem(updateOneItemArgs: UpdateOneItemArgs): Promise<Item> {
     return await this.prisma.item.update(updateOneItemArgs);
+  }
+
+  async updateManyItem(
+    updateManyItemArgs: UpdateManyItemArgs,
+  ): Promise<boolean> {
+    const { count } = await this.prisma.item.updateMany(updateManyItemArgs);
+    this.logger.log(`${count} items were updated`);
+    return true;
   }
 
   async deleteItem(deleteOneItemArgs: DeleteOneItemArgs): Promise<Item> {

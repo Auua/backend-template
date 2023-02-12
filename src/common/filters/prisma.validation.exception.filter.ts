@@ -22,18 +22,18 @@ export class PrismaValidationExceptionFilter extends BaseExceptionFilter {
   );
 
   catch(exception: PrismaClientValidationError, host: ArgumentsHost) {
-    this.logger.error({
-      message: exception.message,
-      context: PrismaValidationExceptionFilter.name,
-    });
-
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<Request>();
 
     const gqlHost = GqlArgumentsHost.create(host);
     const info = gqlHost.getInfo<GraphQLResolveInfo>();
 
-    let args = undefined;
+    this.logger.error({
+      message: `${info.variableValues} ${exception.message}`,
+      context: PrismaValidationExceptionFilter.name,
+    });
+
+    let args: any;
 
     if (request) {
       args = {
@@ -46,7 +46,7 @@ export class PrismaValidationExceptionFilter extends BaseExceptionFilter {
     }
 
     throw new BadRequestException(
-      `validation failed on ${JSON.stringify(args)}`,
+      `validation failed on ${Object.values(args)}`,
     );
   }
 }
