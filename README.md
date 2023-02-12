@@ -29,6 +29,11 @@ PG_DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<database_name>?sc
 MONGO_DATABASE_URL=<your_mongodb.com_url>
 
 JWT_SECRET=<your_key>
+JWT_REFRESH_TOKEN=<your_key>
+
+PORT=3000
+
+COOKIE_SECRET=<your_key>
 ```
 
 ### Generate prisma schemas
