@@ -4,10 +4,11 @@ This project is a boilerplate to start with backend project.
 
 ## Stack
 
-NestJS
-Prisma
-MongoDB
-Postgresql
+- NestJS
+- Prisma
+- MongoDB
+- Postgresql
+- GraphQL
 
 ## SETUP
 
