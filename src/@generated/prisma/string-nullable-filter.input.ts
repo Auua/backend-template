@@ -39,7 +39,4 @@ export class StringNullableFilter {
 
   @Field(() => NestedStringNullableFilter, { nullable: true })
   not?: NestedStringNullableFilter;
-
-  @Field(() => Boolean, { nullable: true })
-  isSet?: boolean;
 }

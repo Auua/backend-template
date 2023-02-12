@@ -14,4 +14,16 @@ export class UserCreateInput {
   @Field(() => String, { nullable: false })
   @CustomValidator.IsValidString()
   name!: string;
+
+  @Field(() => String, { nullable: false })
+  password!: string;
+
+  @Field(() => String, { nullable: true })
+  refreshToken?: string;
+
+  @HideField()
+  createdAt?: Date | string;
+
+  @HideField()
+  updatedAt?: Date | string;
 }

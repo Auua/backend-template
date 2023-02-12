@@ -50,7 +50,4 @@ export class StringNullableWithAggregatesFilter {
 
   @Field(() => NestedStringNullableFilter, { nullable: true })
   _max?: NestedStringNullableFilter;
-
-  @Field(() => Boolean, { nullable: true })
-  isSet?: boolean;
 }

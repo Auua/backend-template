@@ -25,14 +25,16 @@ USER=<user>
 PASSWORD=<password>
 DB_NAME=<database_name>
 
-PG_DATABASE_URL=postgresql://<user>:<password>rootpassword@localhost:5432/<database_name>?schema=public
+PG_DATABASE_URL=postgresql://<user>:<password>@localhost:5432/<database_name>?schema=public
 MONGO_DATABASE_URL=<your_mongodb.com_url>
+
+JWT_SECRET=<your_key>
 ```
 
 ### Generate prisma schemas
 
 ````shell
-npx prisma migrate dev --schema=./prisma/schema_pg.prisma  --name init
+npx prisma migrate dev --schema=./prisma/schema_pg.prisma  --name auth
 ````
 
 ````shell

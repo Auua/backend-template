@@ -10,6 +10,12 @@ type AggregateItem {
   _sum: ItemSumAggregate
 }
 
+type AuthResponse {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -130,6 +136,12 @@ input ItemUpdateInput {
   name: StringFieldUpdateOperationsInput
 }
 
+input ItemUpdateManyMutationInput {
+  count: NullableIntFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
 input ItemWhereInput {
   AND: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
@@ -147,9 +159,14 @@ input ItemWhereUniqueInput {
 type Mutation {
   createItem(data: ItemCreateInput!): Item!
   createUser(data: UserCreateInput!): User!
+  login(loginUserInput: UserLoginCredentialsCompoundUniqueInput!): AuthResponse!
+  logout: Boolean!
+  refresh: AuthResponse!
   removeItem(where: ItemWhereUniqueInput!): Item!
   removeUser(where: UserWhereUniqueInput!): User!
+  signUp(data: UserCreateInput!): AuthResponse!
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item!
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): Boolean!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
@@ -158,7 +175,6 @@ input NestedIntNullableFilter {
   gt: Int
   gte: Int
   in: [Int!]
-  isSet: Boolean
   lt: Int
   lte: Int
   not: NestedIntNullableFilter
@@ -186,7 +202,6 @@ input NestedStringNullableFilter {
   gt: String
   gte: String
   in: [String!]
-  isSet: Boolean
   lt: String
   lte: String
   not: NestedStringNullableFilter
@@ -205,7 +220,6 @@ input NullableIntFieldUpdateOperationsInput {
 
 input NullableStringFieldUpdateOperationsInput {
   set: String
-  unset: Boolean
 }
 
 type Query {
@@ -253,7 +267,6 @@ input StringNullableFilter {
   gt: String
   gte: String
   in: [String!]
-  isSet: Boolean
   lt: String
   lte: String
   mode: QueryMode
@@ -263,31 +276,51 @@ input StringNullableFilter {
 }
 
 type User {
+  createdAt: DateTime!
   email: String!
   id: ID!
   name: String!
+
+  """hashed refresh token"""
+  refreshToken: String
+  updatedAt: DateTime!
 }
 
 input UserCreateInput {
   email: String!
   name: String!
+  password: String!
+  refreshToken: String
+}
+
+input UserLoginCredentialsCompoundUniqueInput {
+  email: String!
+  password: String!
 }
 
 input UserOrderByWithRelationInput {
   email: SortOrder
   id: SortOrder
   name: SortOrder
+  password: SortOrder
+  refreshToken: SortOrder
 }
 
 enum UserScalarFieldEnum {
+  createdAt
   email
   id
   name
+  password
+  refreshToken
+  updatedAt
 }
 
 input UserUpdateInput {
   email: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
+  password: StringFieldUpdateOperationsInput
+  refreshToken: NullableStringFieldUpdateOperationsInput
 }
 
 input UserWhereInput {
@@ -297,9 +330,12 @@ input UserWhereInput {
   email: StringFilter
   id: StringFilter
   name: StringFilter
+  password: StringFilter
+  refreshToken: StringNullableFilter
 }
 
 input UserWhereUniqueInput {
   email: String
   id: String
+  loginCredentials: UserLoginCredentialsCompoundUniqueInput
 }
