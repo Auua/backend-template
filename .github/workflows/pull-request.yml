@@ -9,6 +9,7 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: create pull request
         run: gh pr create --base main --head $BRANCH --title 'Merge $BRANCH into main' --body 'Created by Github action'
         env:
