@@ -3,7 +3,8 @@ on:
   push:
     branches-ignore: main
 jobs:
-  build:
+  createPullRequest:
+    runs-on: ubuntu-latest
     steps:
       - name: create pull request
         run: gh pr create -B main -H ${{ github.ref_name }} --title 'Merge ${{ github.ref_name }} into main' --body 'Created by Github action'
