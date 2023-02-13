@@ -26,7 +26,7 @@ datasource pg {
   provider = "postgresql"
   url      = env("PG_DATABASE_URL")
 }
-
+// TODO add user-item reference
 model User {
   /// @HideField({ match: ['*Update*Input', '*Create*Input'] })
   id           String   @default(uuid()) @id
