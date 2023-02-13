@@ -2,14 +2,15 @@ name: create PR
 on:
   push:
     branches-ignore: main
+    
+permissions:
+  contents: write
 jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: create pull request
-        run: |
-          gh pr create --base main --head action --title 'Merge $BRANCH into main' --body 'Created by Github action'
+        run: gh pr create --base main --head $BRANCH --title 'Merge $BRANCH into main' --body 'Created by Github action'
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.TOKEN_PAT }}
             BRANCH: ${{ github.ref_name }}
