@@ -10,8 +10,6 @@ This project is a boilerplate to start with backend project.
 - Postgresql
 - GraphQL
 
-
-
 ## SETUP
 
 ### ENV variables
