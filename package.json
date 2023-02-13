@@ -2,7 +2,7 @@
   "name": "backend-template",
   "version": "0.0.1",
   "description": "NestJS backend template with basic functionalities",
-  "author": "",
+  "author": "Auua",
   "private": true,
   "license": "MIT",
   "scripts": {
