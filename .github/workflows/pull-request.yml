@@ -6,8 +6,8 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - name: create pull request
-        run: gh pr create -B main -H $BRANCH --title 'Merge $BRANCH into main' --body 'Created by Github action'
+      - name: Dump GitHub context
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            BRANCH: ${{ github.ref_name }}
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
